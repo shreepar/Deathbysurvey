@@ -1,0 +1,26 @@
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#survey-container {
+    background-color: transparent;
+}
+
+button {
+    border: 1px solid #333;
+}
+
+button:hover {
+    background-color: #555;
+    border-color: #555;
+}
+
+#question-number {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}

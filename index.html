@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+    canvas {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body class="bg-black text-white flex items-center justify-center min-h-screen p-4">
+    <canvas id="voidCanvas"></canvas>
+
+    <div id="survey-container" class="bg-black p-8 w-full max-w-xl text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl mb-8 font-bold">A brief questionnaire.</h1>
+        
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <button id="yes-btn" class="bg-gray-800 hover:bg-gray-700 text-white py-3 px-6 transition duration-300 transform hover:scale-105">
+                Proceed
+            </button>
+            <button id="no-btn" class="bg-gray-800 hover:bg-gray-700 text-white py-3 px-6 transition duration-300 transform hover:scale-105">
+                Decline
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+      <script>
+    const canvas = document.getElementById('voidCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Resize canvas to fit window
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Particle class
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Randomly change direction
+        if (Math.random() < 0.02) { // 2% chance per frame
+          this.speedX = Math.random() * 0.5 - 0.25;
+          this.speedY = Math.random() * 0.5 - 0.25;
+        }
+
+        // Wrap particles around edges
+        if (this.x < 0) this.x += canvas.width;
+        if (this.x > canvas.width) this.x -= canvas.width;
+        if (this.y < 0) this.y += canvas.height;
+        if (this.y > canvas.height) this.y -= canvas.height;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200, 200, 255, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    // Create particle array
+    const particles = [];
+    const particleCount = 100;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    // Animation loop
+    function animate() {
+      // Fade out previous frame for trail effect
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
