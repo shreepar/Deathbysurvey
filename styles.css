@@ -6,6 +6,19 @@ body {
 
 #survey-container {
     background-color: transparent;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+#survey-container.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+#survey-container.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 button {
@@ -23,4 +36,41 @@ button:hover {
     left: 1rem;
     font-size: 0.875rem;
     color: #6b7280;
+}/* Fade animations already in your code */
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+
+.scare-text {
+  font-size: 9rem;
+  font-weight: 900;
+  color: red;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff3333, 0 0 40px #ff6666;
+  animation: glitch 0.15s infinite, shake 0.3s infinite;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+@keyframes glitch {
+  0%   { text-shadow: 2px 0 red, -2px 0 blue; }
+  20%  { text-shadow: -2px 0 red, 2px 0 blue; }
+  40%  { text-shadow: 2px 2px lime, -2px -2px cyan; }
+  60%  { text-shadow: -2px -2px lime, 2px 2px cyan; }
+  80%  { text-shadow: 2px -2px magenta, -2px 2px yellow; }
+  100% { text-shadow: -2px 2px magenta, 2px -2px yellow; }
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-8px, 3px); }
+  40% { transform: translate(5px, -5px); }
+  60% { transform: translate(-5px, 5px); }
+  80% { transform: translate(8px, -3px); }
+  100% { transform: translate(0, 0); }
 }
